@@ -1620,12 +1620,11 @@
             grid-area: sidebar;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
             gap: clamp(12px, 1.1vw, 16px);
             width: 100%;
             height: 100%;
-            justify-content: center;
-            align-items: stretch;
-            align-self: stretch;
             min-height: 0;
         }
 
@@ -1649,9 +1648,7 @@
         .adventure-game-panel {
             grid-area: game;
             display: grid;
-            grid-template-rows: minmax(0, 1fr);
-            justify-items: center;
-            align-items: center;
+            place-items: center;
             min-width: 0;
             min-height: 0;
             width: 100%;
@@ -1773,6 +1770,7 @@
             gap: clamp(8px, 0.8vw, 10px);
             width: 100%;
             min-height: 0;
+            box-sizing: border-box;
         }
 
         .adventure-instruction {
