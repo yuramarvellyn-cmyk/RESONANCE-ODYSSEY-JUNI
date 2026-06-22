@@ -1578,9 +1578,13 @@
             border: 3px solid #C89B3C;
             padding: clamp(16px, 1.6vw, 22px);
             display: grid;
-            grid-template-columns: minmax(190px, 28%) minmax(0, 72%);
-            grid-template-rows: auto minmax(0, 1fr);
-            align-items: center;
+            grid-template-columns: minmax(200px, 30%) minmax(0, 70%);
+            grid-template-rows: auto minmax(0, 1fr) auto;
+            grid-template-areas:
+                "title title"
+                "sidebar game"
+                "sidebar actions";
+            align-items: stretch;
             gap: clamp(14px, 1.4vw, 18px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
             overflow: hidden;
@@ -1589,7 +1593,7 @@
         }
 
         .adventure-title {
-            grid-column: 1 / -1;
+            grid-area: title;
             font-size: clamp(22px, 3.2vw, 30px);
             color: #4E2E1E;
             font-weight: 900;
@@ -1613,8 +1617,7 @@
 
         /* Info Row - Wilayah & Alat Musik */
         .adventure-info-row {
-            grid-column: 1;
-            grid-row: 2;
+            grid-area: sidebar;
             display: flex;
             flex-direction: column;
             gap: clamp(12px, 1.1vw, 16px);
@@ -1644,14 +1647,11 @@
         }
 
         .adventure-game-panel {
-            grid-column: 2;
-            grid-row: 2;
+            grid-area: game;
             display: grid;
-            grid-template-rows: minmax(0, 1fr) auto auto;
+            grid-template-rows: minmax(0, 1fr);
             justify-items: center;
-            align-content: center;
             align-items: center;
-            gap: clamp(10px, 1vh, 14px);
             min-width: 0;
             min-height: 0;
             width: 100%;
@@ -1764,6 +1764,17 @@
         }
 
         /* Instruction Text */
+        .adventure-actions {
+            grid-area: actions;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(8px, 0.8vw, 10px);
+            width: 100%;
+            min-height: 0;
+        }
+
         .adventure-instruction {
             font-size: clamp(11px, 1.15vw, 13px);
             color: #3C2B20;
@@ -1772,7 +1783,6 @@
             font-weight: 600;
             line-height: 1.35;
             max-width: 100%;
-            align-self: center;
         }
 
         /* Buttons */
@@ -3099,9 +3109,10 @@
                 <div id="adventure-stage" class="adventure-stage">
                     <div id="adventure-player" class="adventure-player">🧍</div>
                 </div>
-                
+            </div>
+
+            <div class="adventure-actions">
                 <p id="adventure-instruction" class="adventure-instruction">Tangkap alat musik yang jatuh untuk lanjut ke soal</p>
-                
                 <div class="adventure-buttons">
                     <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
                     <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
