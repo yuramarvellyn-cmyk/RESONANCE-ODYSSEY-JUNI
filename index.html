@@ -1624,14 +1624,15 @@
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(200, 155, 60, 0.35);
             border-radius: 14px;
-            padding: clamp(8px, 0.8vw, 10px);
-            text-align: left;
+            padding: clamp(10px, 1vw, 14px);
+            text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            justify-content: center;
             box-sizing: border-box;
         }
 
@@ -1654,9 +1655,11 @@
         }
 
         .adventure-info-card .info-label {
-            text-align: left;
-            font-size: clamp(8px, 0.85vw, 10px);
+            text-align: center;
+            font-size: clamp(9px, 0.9vw, 11px);
             letter-spacing: 0.08em;
+            line-height: 1.2;
+            width: 100%;
         }
 
         .info-main {
@@ -1666,16 +1669,18 @@
             gap: clamp(6px, 0.8vw, 8px);
             width: 100%;
             text-align: center;
+            min-width: 0;
         }
 
         .adventure-mini-image {
-            width: clamp(34px, 4.4vw, 52px);
-            height: clamp(34px, 4.4vw, 52px);
+            width: clamp(38px, 4.8vw, 56px);
+            height: clamp(38px, 4.8vw, 56px);
             border-radius: 10px;
             object-fit: cover;
             border: 1px solid rgba(76, 35, 17, 0.16);
             background: #fff;
             flex: 0 0 auto;
+            display: block;
         }
 
         .info-value {
@@ -1685,6 +1690,8 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-align: center;
+            line-height: 1.2;
         }
 
         #adventure-region-name {
