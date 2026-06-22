@@ -1572,15 +1572,15 @@
         .adventure-container {
             width: min(96vw, 980px);
             max-width: 980px;
-            max-height: min(88vh, 600px);
-            height: auto;
+            height: min(88vh, 620px);
+            max-height: 620px;
             background: linear-gradient(135deg, #F6EBD3 0%, #E8D7B9 50%);
             border-radius: 24px;
             border: 3px solid #C89B3C;
             padding: clamp(12px, 1.3vw, 16px);
             display: grid;
             grid-template-columns: minmax(180px, 230px) minmax(0, 1fr);
-            grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+            grid-template-rows: auto auto minmax(0, 1fr) auto;
             align-items: stretch;
             gap: clamp(10px, 1vw, 14px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
@@ -1613,13 +1613,14 @@
         /* Info Row - Wilayah & Alat Musik */
         .adventure-info-row {
             grid-column: 1;
-            grid-row: 3 / span 3;
+            grid-row: 2 / span 2;
             display: flex;
             flex-direction: column;
             gap: clamp(10px, 1vw, 14px);
             width: 100%;
             justify-content: center;
             align-items: stretch;
+            align-self: center;
         }
 
         .adventure-info-card {
@@ -1636,6 +1637,19 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             justify-content: center;
+        }
+
+        .adventure-game-panel {
+            grid-column: 2;
+            grid-row: 2 / span 2;
+            display: grid;
+            grid-template-rows: minmax(0, 1fr) auto auto;
+            justify-items: center;
+            align-items: center;
+            gap: clamp(8px, 0.8vw, 10px);
+            min-width: 0;
+            min-height: 0;
+            width: 100%;
         }
 
         .adventure-info-card:hover {
@@ -1681,13 +1695,11 @@
 
         /* Game Stage */
         .adventure-stage {
-            grid-column: 2;
-            grid-row: 3;
             position: relative;
-            width: 100%;
-            max-width: 100%;
-            height: min(52vh, 420px);
-            min-height: 320px;
+            width: min(100%, 560px);
+            max-width: 560px;
+            aspect-ratio: 1 / 1;
+            height: auto;
             margin: 0;
             background-color: transparent;
             background-image: url("https://raw.githubusercontent.com/lesmanaalit85-oss/resonance-odyssey/2316af59054f31128ec8fb930243ec71875b4051/Hijau%20dan%20Biru%20Warna-warni%20Lucu%20Ilustrasi%20Alam%20Doa%20Masuk%20Rumah%20A4%20Dokumen%20(Logo).png");
@@ -1744,8 +1756,6 @@
 
         /* Instruction Text */
         .adventure-instruction {
-            grid-column: 2;
-            grid-row: 4;
             font-size: clamp(11px, 1.2vw, 13px);
             color: #3C2B20;
             text-align: center;
@@ -1758,8 +1768,6 @@
 
         /* Buttons */
         .adventure-buttons {
-            grid-column: 2;
-            grid-row: 5;
             display: flex;
             flex-direction: column;
             gap: clamp(8px, 0.8vw, 10px);
@@ -3078,15 +3086,17 @@
                 </div>
             </div>
             
-            <div id="adventure-stage" class="adventure-stage">
-                <div id="adventure-player" class="adventure-player">🧍</div>
-            </div>
-            
-            <p id="adventure-instruction" class="adventure-instruction">Tangkap alat musik yang jatuh untuk lanjut ke soal</p>
-            
-            <div class="adventure-buttons">
-                <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
-                <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
+            <div class="adventure-game-panel">
+                <div id="adventure-stage" class="adventure-stage">
+                    <div id="adventure-player" class="adventure-player">🧍</div>
+                </div>
+                
+                <p id="adventure-instruction" class="adventure-instruction">Tangkap alat musik yang jatuh untuk lanjut ke soal</p>
+                
+                <div class="adventure-buttons">
+                    <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
+                    <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
+                </div>
             </div>
             
             <p id="adventure-status" class="adventure-status-hidden"></p>
