@@ -1552,7 +1552,7 @@
             display: grid;
             place-items: center;
             overflow: hidden;
-            padding: clamp(10px, 2vw, 18px);
+            padding: clamp(8px, 1.2vw, 16px);
         }
 
         #adventure-overlay::-webkit-scrollbar {
@@ -1569,16 +1569,16 @@
         }
 
         .adventure-container {
-            width: min(98vw, 1180px);
-            max-width: 1180px;
-            height: min(94vh, 700px);
-            max-height: 700px;
+            width: min(97vw, 1120px);
+            max-width: 1120px;
+            height: min(91vh, 650px);
+            max-height: 650px;
             background: linear-gradient(135deg, #F6EBD3 0%, #E8D7B9 50%);
             border-radius: 24px;
             border: 3px solid #C89B3C;
-            padding: clamp(10px, 1vw, 14px);
+            padding: clamp(10px, 1vw, 12px);
             display: grid;
-            grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+            grid-template-columns: minmax(220px, 25%) minmax(0, 75%);
             grid-template-rows: auto auto minmax(0, 1fr) auto;
             grid-template-areas:
                 "title title"
@@ -1586,7 +1586,7 @@
                 "sidebar game"
                 "sidebar actions";
             align-items: stretch;
-            gap: clamp(10px, 0.9vw, 12px);
+            gap: clamp(10px, 0.85vw, 12px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
             overflow: hidden;
             min-height: 0;
@@ -1620,9 +1620,8 @@
         /* Info Row - Wilayah & Alat Musik */
         .adventure-info-row {
             grid-area: sidebar;
-            display: flex;
-            flex-direction: column;
-            justify-content: stretch;
+            display: grid;
+            grid-template-rows: repeat(2, minmax(0, 1fr));
             align-items: stretch;
             gap: clamp(8px, 0.75vw, 10px);
             width: 100%;
@@ -1633,8 +1632,8 @@
         .adventure-info-card {
             width: 100%;
             min-width: 0;
+            min-height: 0;
             aspect-ratio: 1 / 1;
-            flex: 1 1 0;
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(200, 155, 60, 0.35);
             border-radius: 14px;
@@ -1683,12 +1682,13 @@
         }
 
         .adventure-mini-image {
-            width: clamp(38px, 5vw, 56px);
-            height: clamp(38px, 5vw, 56px);
+            width: clamp(34px, 4.4vw, 52px);
+            height: clamp(34px, 4.4vw, 52px);
             border-radius: 10px;
             object-fit: cover;
             border: 1px solid rgba(76, 35, 17, 0.16);
             background: #fff;
+            flex: 0 0 auto;
         }
 
         .info-value {
@@ -1772,18 +1772,18 @@
             grid-area: actions;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
             gap: clamp(6px, 0.65vw, 8px);
             width: 100%;
             min-height: 0;
             box-sizing: border-box;
             align-self: stretch;
-            padding-top: 2px;
+            padding-top: 0;
         }
 
         .adventure-instruction {
-            font-size: clamp(11px, 1.05vw, 12px);
+            font-size: clamp(11px, 1vw, 12px);
             color: #3C2B20;
             text-align: center;
             margin: 0;
@@ -1797,8 +1797,7 @@
             display: flex;
             flex-direction: column;
             gap: clamp(6px, 0.6vw, 8px);
-            width: 100%;
-            max-width: 360px;
+            width: min(100%, 340px);
             justify-content: center;
             align-items: center;
             padding-top: 0;
@@ -1807,8 +1806,8 @@
 
         .adventure-btn {
             width: 100%;
-            padding: clamp(11px, 1vw, 13px) clamp(16px, 1.6vw, 18px);
-            font-size: clamp(12px, 1.15vw, 14px);
+            padding: clamp(10px, 0.9vw, 12px) clamp(14px, 1.4vw, 18px);
+            font-size: clamp(12px, 1.1vw, 13px);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.1em;
