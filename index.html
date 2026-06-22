@@ -1547,9 +1547,8 @@
 
         /* Adventure Overlay Container */
         #adventure-overlay {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: grid;
+            place-items: center;
             min-height: 100vh;
             max-height: 100vh;
             overflow: hidden;
@@ -1572,17 +1571,17 @@
         .adventure-container {
             width: min(96vw, 980px);
             max-width: 980px;
-            height: min(88vh, 620px);
+            height: min(90vh, 620px);
             max-height: 620px;
             background: linear-gradient(135deg, #F6EBD3 0%, #E8D7B9 50%);
             border-radius: 24px;
             border: 3px solid #C89B3C;
             padding: clamp(12px, 1.3vw, 16px);
             display: grid;
-            grid-template-columns: minmax(180px, 230px) minmax(0, 1fr);
-            grid-template-rows: auto auto minmax(0, 1fr) auto;
+            grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+            grid-template-rows: auto 1fr;
             align-items: stretch;
-            gap: clamp(10px, 1vw, 14px);
+            gap: clamp(12px, 1.2vw, 18px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
             overflow: hidden;
             min-height: 0;
@@ -1597,6 +1596,7 @@
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 0.12em;
+            line-height: 1.1;
         }
 
         .adventure-subtitle {
@@ -1613,7 +1613,7 @@
         /* Info Row - Wilayah & Alat Musik */
         .adventure-info-row {
             grid-column: 1;
-            grid-row: 2 / span 2;
+            grid-row: 2;
             display: flex;
             flex-direction: column;
             gap: clamp(10px, 1vw, 14px);
@@ -1621,6 +1621,7 @@
             justify-content: center;
             align-items: stretch;
             align-self: center;
+            min-height: 0;
         }
 
         .adventure-info-card {
@@ -1641,15 +1642,16 @@
 
         .adventure-game-panel {
             grid-column: 2;
-            grid-row: 2 / span 2;
+            grid-row: 2;
             display: grid;
             grid-template-rows: minmax(0, 1fr) auto auto;
             justify-items: center;
             align-items: center;
-            gap: clamp(8px, 0.8vw, 10px);
+            gap: clamp(8px, 0.9vh, 12px);
             min-width: 0;
             min-height: 0;
             width: 100%;
+            height: 100%;
         }
 
         .adventure-info-card:hover {
@@ -1713,6 +1715,7 @@
             flex-shrink: 0;
             min-height: 0;
             align-self: center;
+            justify-self: center;
         }
 
         .adventure-player {
