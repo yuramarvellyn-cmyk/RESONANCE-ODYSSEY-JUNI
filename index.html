@@ -1547,10 +1547,10 @@
 
         /* Adventure Overlay Container */
         #adventure-overlay {
+            width: 100vw;
+            height: 100vh;
             display: grid;
             place-items: center;
-            min-height: 100vh;
-            max-height: 100vh;
             overflow: hidden;
             padding: clamp(10px, 2vw, 18px);
         }
@@ -1571,25 +1571,26 @@
         .adventure-container {
             width: min(96vw, 980px);
             max-width: 980px;
-            height: min(90vh, 620px);
+            height: min(88vh, 620px);
             max-height: 620px;
             background: linear-gradient(135deg, #F6EBD3 0%, #E8D7B9 50%);
             border-radius: 24px;
             border: 3px solid #C89B3C;
-            padding: clamp(12px, 1.3vw, 16px);
+            padding: clamp(16px, 1.6vw, 22px);
             display: grid;
-            grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
-            grid-template-rows: auto 1fr;
-            align-items: stretch;
-            gap: clamp(12px, 1.2vw, 18px);
+            grid-template-columns: minmax(190px, 28%) minmax(0, 72%);
+            grid-template-rows: auto minmax(0, 1fr);
+            align-items: center;
+            gap: clamp(14px, 1.4vw, 18px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
             overflow: hidden;
             min-height: 0;
+            box-sizing: border-box;
         }
 
         .adventure-title {
             grid-column: 1 / -1;
-            font-size: clamp(24px, 4vw, 32px);
+            font-size: clamp(22px, 3.2vw, 30px);
             color: #4E2E1E;
             font-weight: 900;
             margin: 0;
@@ -1616,11 +1617,12 @@
             grid-row: 2;
             display: flex;
             flex-direction: column;
-            gap: clamp(10px, 1vw, 14px);
+            gap: clamp(12px, 1.1vw, 16px);
             width: 100%;
+            height: 100%;
             justify-content: center;
             align-items: stretch;
-            align-self: center;
+            align-self: stretch;
             min-height: 0;
         }
 
@@ -1630,14 +1632,15 @@
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(200, 155, 60, 0.35);
             border-radius: 14px;
-            padding: clamp(8px, 0.9vw, 10px);
+            padding: clamp(10px, 1vw, 12px);
             text-align: left;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             justify-content: center;
+            box-sizing: border-box;
         }
 
         .adventure-game-panel {
@@ -1646,12 +1649,14 @@
             display: grid;
             grid-template-rows: minmax(0, 1fr) auto auto;
             justify-items: center;
+            align-content: center;
             align-items: center;
-            gap: clamp(8px, 0.9vh, 12px);
+            gap: clamp(10px, 1vh, 14px);
             min-width: 0;
             min-height: 0;
             width: 100%;
             height: 100%;
+            box-sizing: border-box;
         }
 
         .adventure-info-card:hover {
@@ -1700,8 +1705,8 @@
             position: relative;
             width: min(100%, 560px);
             max-width: 560px;
+            height: clamp(320px, 50vh, 460px);
             aspect-ratio: 1 / 1;
-            height: auto;
             margin: 0;
             background-color: transparent;
             background-image: url("https://raw.githubusercontent.com/lesmanaalit85-oss/resonance-odyssey/2316af59054f31128ec8fb930243ec71875b4051/Hijau%20dan%20Biru%20Warna-warni%20Lucu%20Ilustrasi%20Alam%20Doa%20Masuk%20Rumah%20A4%20Dokumen%20(Logo).png");
@@ -1716,6 +1721,7 @@
             min-height: 0;
             align-self: center;
             justify-self: center;
+            box-sizing: border-box;
         }
 
         .adventure-player {
@@ -1759,7 +1765,7 @@
 
         /* Instruction Text */
         .adventure-instruction {
-            font-size: clamp(11px, 1.2vw, 13px);
+            font-size: clamp(11px, 1.15vw, 13px);
             color: #3C2B20;
             text-align: center;
             margin: 0;
@@ -1777,8 +1783,8 @@
             width: 100%;
             justify-content: center;
             align-items: center;
-            padding-top: clamp(4px, 0.6vw, 6px);
-            padding-bottom: clamp(6px, 0.8vw, 8px);
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
         .adventure-btn {
