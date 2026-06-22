@@ -1579,10 +1579,9 @@
             padding: clamp(10px, 1vw, 12px);
             display: grid;
             grid-template-columns: minmax(220px, 25%) minmax(0, 75%);
-            grid-template-rows: auto auto minmax(0, 1fr) auto;
+            grid-template-rows: auto minmax(0, 1fr) auto;
             grid-template-areas:
                 "title title"
-                "subtitle subtitle"
                 "sidebar game"
                 "sidebar actions";
             align-items: stretch;
@@ -1603,18 +1602,6 @@
             text-transform: uppercase;
             letter-spacing: 0.12em;
             line-height: 1.1;
-        }
-
-        .adventure-subtitle {
-            grid-area: subtitle;
-            font-size: clamp(11px, 1.15vw, 13px);
-            color: #6B4B2A;
-            text-align: center;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            opacity: 0.85;
-            line-height: 1.2;
         }
 
         /* Info Row - Wilayah & Alat Musik */
@@ -3093,7 +3080,6 @@
     <div id="adventure-overlay" class="screen-overlay hidden">
         <div class="adventure-container">
             <h2 class="adventure-title">MINI-GAME PETUALANGAN</h2>
-            <p class="adventure-subtitle">Tangkap alat musik yang sesuai!</p>
             
             <div class="adventure-info-row">
                 <div class="adventure-info-card">
@@ -3119,7 +3105,7 @@
             </div>
 
             <div class="adventure-actions">
-                <p id="adventure-instruction" class="adventure-instruction">Tangkap alat musik yang jatuh untuk lanjut ke soal</p>
+                <p id="adventure-instruction" class="adventure-instruction"></p>
                 <div class="adventure-buttons">
                     <button id="adventure-start-btn" class="btn-gold adventure-btn" onclick="startAdventure()">MULAI</button>
                     <button id="adventure-continue-btn" class="btn-gold adventure-btn hidden" onclick="proceedToQuiz()">LANJUT KE SOAL</button>
@@ -4038,7 +4024,7 @@
             document.getElementById('adventure-instrument-name').innerText = `${instrument.icon} ${instrument.name}`;
             
             // Update instruction
-            document.getElementById('adventure-instruction').innerText = `Tangkap ${instrument.name} untuk lanjut ke soal`;
+            document.getElementById('adventure-instruction').innerText = '';
             
             document.getElementById('adventure-start-btn').classList.remove('hidden');
             document.getElementById('adventure-continue-btn').classList.add('hidden');
@@ -4059,7 +4045,7 @@
             adventureState.finished = false;
             adventureState.caught = false;
 
-            document.getElementById('adventure-instruction').innerText = `⏱️ Tangkap ${adventureState.correctInstrument.name} yang jatuh!`;
+            document.getElementById('adventure-instruction').innerText = '';
             document.getElementById('adventure-start-btn').classList.add('hidden');
             document.getElementById('adventure-continue-btn').classList.add('hidden');
 
@@ -4146,7 +4132,7 @@
                         playSound(130, 0.2);
                         obs.el.style.background = '#f87171';
                         obs.el.style.color = '#fff';
-                        document.getElementById('adventure-instruction').innerText = `❌ Salah! Tangkap ${adventureState.correctInstrument.name} ${adventureState.correctInstrument.icon}. Coba lagi.`;
+                        document.getElementById('adventure-instruction').innerText = '❌ Salah! Coba lagi.';
                         obs.hit = true;
                     }
                 }
