@@ -41,6 +41,14 @@
             user-select: none;
         }
 
+        /* Remove any leftover stamina visuals */
+        .stamina-info,
+        .stamina-label,
+        #life-icons,
+        .status-card.stamina-info {
+            display: none !important;
+        }
+
         .content-card {
             background: var(--paper);
             border: clamp(5px, 1.5vw, 8px) solid var(--wood);
@@ -3063,8 +3071,8 @@
             <ul>
                     <li>Klik kotak kota berikutnya untuk bergerak di peta.</li>
                 <li>Setiap wilayah baru akan memberikan tantangan musik daerah tersebut.</li>
-                <li>Jawaban benar menjaga staminamu, jawaban salah akan menguranginya.</li>
-                <li>Tujuanmu adalah mengunjungi seluruh wilayah sebelum stamina habis.</li>
+                <li>Jawaban benar akan menambah poin, salah tetap melanjutkan permainan.</li>
+                <li>Tujuanmu adalah mengunjungi seluruh wilayah dan kumpulkan pengetahuan musik Nusantara.</li>
                 <li>Karakter akan berjalan santai mengikuti langkahmu.</li>
             </ul>
             <button class="btn-gold" onclick="showCharSelect()">NEXT (Pilih Karakter)</button>
@@ -3087,7 +3095,7 @@
                 <li><strong>Gerak:</strong> Klik kotak kota berikutnya untuk bergerak di peta.</li>
                 <li><strong>Kunjungi Kota:</strong> Setiap kota memiliki pertanyaan musik Nusantara yang harus dijawab.</li>
                 <li><strong>Jawab Soal:</strong> Pilih jawaban yang benar untuk mendapatkan poin dan melanjutkan perjalanan.</li>
-                <li><strong>Stamina:</strong> Perhatikan stamina Anda, jangan sampai habis!</li>
+                <li><strong>Tips:</strong> Fokus pada jawaban yang tepat untuk meningkatkan skor.</li>
                 <li><strong>Tujuan:</strong> Selesaikan perjalanan melintasi Nusantara dan kumpulkan pengetahuan musik.</li>
             </ul>
             <button class="btn-gold" onclick="startGame()">NEXT</button>
@@ -3109,10 +3117,7 @@
                     <div class="location-label">Lokasi</div>
                     <div id="current-loc">-</div>
                 </div>
-                <div class="status-card stamina-info">
-                    <div class="stamina-label">Stamina</div>
-                    <div id="life-icons">❤️❤️❤️❤️❤️</div>
-                </div>
+                <!-- Stamina removed -->
             </div>
         </div>
     </header>
@@ -3402,7 +3407,6 @@
             playerName: '',
             schoolName: '',
             idx: 0,
-            lives: 5,
             charId: '',
             active: false,
             isMoving: false,
@@ -3752,7 +3756,6 @@
             token.style.left = `${centerX}%`;
             token.style.top = `${centerY}%`;
             
-            document.getElementById('life-icons').innerText = "❤️".repeat(Math.max(0, state.lives));
             document.getElementById('current-loc').innerText = cityData[state.idx].name;
             updateStatusPanel();
             
@@ -3929,7 +3932,6 @@
                 message.style.color = '#667eea';
             } else {
                 playSound(98, 0.2);
-                state.lives--;
                 icon.innerText = "❌";
                 title.innerText = "SALAH!";
                 title.style.color = '#dc2626';
@@ -3946,9 +3948,7 @@
                 state.isMoving = false;
                 // kembalikan tampilan token papan saat quiz ditutup
                 showBoardToken();
-                if (state.lives <= 0) {
-                    finish(false);
-                } else if (state.visited.size === cityData.length) {
+                if (state.visited.size === cityData.length) {
                     finish(true);
                 }
                 updateTokenPos();
@@ -3973,7 +3973,7 @@
             formData.append('entry.725280792', state.schoolName); // Nama Sekolah
             formData.append('entry.96563292', state.charId); // Karakter
             formData.append('entry.1117235510', win ? 'Menang' : 'Kalah'); // Hasil Game
-            formData.append('entry.450530510', state.lives); // Nyawa Tersisa
+            // Stamina removed - do not send remaining lives
             formData.append('entry.1655330258', state.answers.filter(a => a.correct).length); // Total Benar
             formData.append('entry.1984621075', state.answers.filter(a => !a.correct).length); // Total Salah
             formData.append('entry.439573770', new Date().toLocaleString('id-ID')); // Waktu Selesai
@@ -4005,7 +4005,7 @@
                 document.getElementById('end-title').style.color = '#22c55e';
             } else {
                 document.getElementById('end-title').innerText = "💀 HARMONI TERHENTI";
-                document.getElementById('end-message').innerText = "Stamina habis. Pelajari lagi kekayaan musik Nusantara dan coba lagi!";
+                document.getElementById('end-message').innerText = "Permainan selesai. Coba lagi untuk meningkatkan skor dan jelajahi lebih banyak wilayah!";
                 document.getElementById('end-title').style.color = '#dc2626';
             }
             
@@ -4457,7 +4457,7 @@
             } else {
                 card.style.borderColor = '#dc2626';
                 playSound(98, 0.2);
-                state.lives--;
+                // lives feature removed
             }
             
             // Jika kartu 3 dijawab, unlock kartu 4
@@ -4472,9 +4472,7 @@
                     state.isMoving = false;
                     // kembalikan token papan setelah kartu selesai
                     showBoardToken();
-                    if (state.lives <= 0) {
-                        finish(false);
-                    } else if (state.visited.size === cityData.length) {
+                    if (state.visited.size === cityData.length) {
                         finish(true);
                     }
                     updateTokenPos();
