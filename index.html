@@ -1847,7 +1847,7 @@
             left: 50%;
             bottom: 15%;
             transform: translateX(-50%);
-            transition: left 0.15s ease;
+            transition: none;
             font-size: clamp(32px, 7vw, 40px);
             z-index: 10;
         }
@@ -3482,11 +3482,14 @@
         const adventureState = {
             running: false,
             playerPos: 50,
+            playerTarget: 50,
             obstacles: [],
             nextSpawn: 0,
             spawned: 0,
             maxObstacles: 5,
-            intervalId: null,
+            rafId: null,
+            lastTime: null,
+            spawnTimer: 0,
             finished: false,
             caught: false,
             correctInstrument: null
@@ -4287,22 +4290,32 @@
             stage.addEventListener('mousemove', handleMouseMove);
             stage.addEventListener('touchmove', handleTouchMove, { passive: false });
 
-            if (adventureState.intervalId) {
-                clearInterval(adventureState.intervalId);
+            // Start RAF-based loop for smooth, time-based updates
+            if (adventureState.rafId) cancelAnimationFrame(adventureState.rafId);
+            adventureState.lastTime = null;
+            adventureState.spawnTimer = 0;
+            adventureState.playerTarget = adventureState.playerPos;
+            function loop(ts) {
+                if (!adventureState.running) return;
+                if (!adventureState.lastTime) adventureState.lastTime = ts;
+                const dt = ts - adventureState.lastTime;
+                adventureState.lastTime = ts;
+                updateAdventure(dt);
+                adventureState.rafId = requestAnimationFrame(loop);
             }
-            adventureState.intervalId = setInterval(updateAdventure, 40);
+            adventureState.rafId = requestAnimationFrame(loop);
         }
 
         function moveAdventurePlayer(direction) {
             if (!adventureState.running) return;
             const step = 10;
             if (direction === 'left') {
-                adventureState.playerPos = Math.max(10, adventureState.playerPos - step);
+                adventureState.playerTarget = Math.max(10, adventureState.playerTarget - step);
             } else if (direction === 'right') {
-                adventureState.playerPos = Math.min(90, adventureState.playerPos + step);
+                adventureState.playerTarget = Math.min(90, adventureState.playerTarget + step);
             }
             const player = document.getElementById('adventure-player');
-            player.style.left = `${adventureState.playerPos}%`;
+            // leave actual rendering to RAF loop for smooth interpolation
         }
 
         function handleMouseMove(e) {
@@ -4311,9 +4324,9 @@
             const rect = stage.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const percentage = (x / rect.width) * 100;
-            adventureState.playerPos = Math.max(10, Math.min(90, percentage));
+            adventureState.playerTarget = Math.max(10, Math.min(90, percentage));
             const player = document.getElementById('adventure-player');
-            player.style.left = `${adventureState.playerPos}%`;
+            // rendering handled in RAF loop
         }
 
         function handleTouchMove(e) {
@@ -4324,49 +4337,72 @@
             const touch = e.touches[0];
             const x = touch.clientX - rect.left;
             const percentage = (x / rect.width) * 100;
-            adventureState.playerPos = Math.max(10, Math.min(90, percentage));
-            const player = document.getElementById('adventure-player');
-            player.style.left = `${adventureState.playerPos}%`;
+            adventureState.playerTarget = Math.max(10, Math.min(90, percentage));
+            // rendering handled in RAF loop
         }
 
-        function updateAdventure() {
+        function updateAdventure(dt) {
             if (adventureState.caught || !adventureState.running) return;
             const stage = document.getElementById('adventure-stage');
-            adventureState.nextSpawn -= 40;
-            if (adventureState.nextSpawn <= 0) {
+            const stageRect = stage.getBoundingClientRect();
+
+            // Smoothly move player toward target (percent units)
+            const maxSpeedPercentPerSec = 400; // percent of stage width per second
+            const diff = adventureState.playerTarget - adventureState.playerPos;
+            const maxDelta = maxSpeedPercentPerSec * (dt / 1000);
+            if (Math.abs(diff) <= maxDelta) {
+                adventureState.playerPos = adventureState.playerTarget;
+            } else {
+                adventureState.playerPos += Math.sign(diff) * maxDelta;
+            }
+            const player = document.getElementById('adventure-player');
+            player.style.left = `${adventureState.playerPos}%`;
+
+            // Spawn timer (ms)
+            adventureState.spawnTimer -= dt;
+            if (adventureState.spawnTimer <= 0) {
                 spawnAdventureObstacle(stage);
-                adventureState.nextSpawn = 800;
+                // randomize next spawn between 600-1200ms
+                adventureState.spawnTimer = 600 + Math.random() * 600;
             }
 
+            // Update obstacles using pixel positions for consistent behaviour
             adventureState.obstacles.forEach(obs => {
                 if (obs.done) return;
-                obs.y += 3.4;
-                obs.el.style.top = `${obs.y}%`;
-                if (!obs.hit && obs.y > 78 && obs.y < 95) {
-                    const player = document.getElementById('adventure-player');
-                    const playerPos = adventureState.playerPos;
-                    if (Math.abs(obs.x - playerPos) < 12) {
+                // speed in px/sec (proportional to stage height)
+                const speedPx = (stageRect.height || 240) * 0.6; // falls in ~1.6s down
+                obs.yPx += speedPx * (dt / 1000);
+                obs.el.style.transform = `translateY(${obs.yPx}px)`;
+
+                // collision detection using bounding rects
+                if (!obs.hit) {
+                    const obsRect = obs.el.getBoundingClientRect();
+                    const playerRect = player.getBoundingClientRect();
+                    const intersect = !(obsRect.right < playerRect.left || obsRect.left > playerRect.right || obsRect.bottom < playerRect.top || obsRect.top > playerRect.bottom);
+                    if (intersect) {
                         obs.hit = true;
                         if (obs.icon === adventureState.correctInstrument.icon) {
-                            obs.el.style.background = '#34d399';
-                            obs.el.style.color = '#ffffff';
+                            obs.el.classList.add('hit');
                             playSound(523.25, 0.2);
                             adventureState.caught = true;
                             completeAdventure();
                             return;
+                        } else {
+                            obs.el.classList.add('hit');
+                            playSound(130, 0.2);
+                            document.getElementById('adventure-instruction').innerText = '❌ Salah! Coba lagi.';
                         }
-                        playSound(130, 0.2);
-                        obs.el.style.background = '#f87171';
-                        obs.el.style.color = '#fff';
-                        document.getElementById('adventure-instruction').innerText = '❌ Salah! Coba lagi.';
-                        obs.hit = true;
                     }
                 }
-                if (obs.y >= 110) {
+
+                // remove when out of view
+                if (obs.yPx > stageRect.height + 80) {
                     obs.done = true;
                     obs.el.remove();
                 }
             });
+            // clean up finished obstacles array
+            adventureState.obstacles = adventureState.obstacles.filter(o => !o.done);
         }
 
         function spawnAdventureObstacle(stage) {
@@ -4391,7 +4427,7 @@
             if (adventureState.finished) return;
             adventureState.finished = true;
             adventureState.running = false;
-            clearInterval(adventureState.intervalId);
+            if (adventureState.rafId) cancelAnimationFrame(adventureState.rafId);
             // Remove event listeners
             const stage = document.getElementById('adventure-stage');
             stage.removeEventListener('mousemove', handleMouseMove);
@@ -4609,6 +4645,9 @@
         });
 
         initBoard();
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
