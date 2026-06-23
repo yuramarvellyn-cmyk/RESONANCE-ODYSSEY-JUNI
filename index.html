@@ -2854,6 +2854,32 @@
                 height: clamp(62px, 13vw, 85px);
             }
 
+            /* Ensure avatar selection wrapper is centered and constrained */
+            #screen-char > div {
+                width: min(92vw, 360px);
+                max-width: 360px;
+                padding: clamp(12px, 3vw, 18px);
+                margin: 0 auto;
+                box-sizing: border-box;
+            }
+
+            /* Make avatar grid two columns on most phones so cards aren't cut off */
+            .char-grid {
+                grid-template-columns: repeat(2, minmax(120px, 1fr));
+                gap: clamp(10px, 4vw, 18px);
+            }
+
+            .char-card {
+                width: 100%;
+                max-width: 180px;
+                padding: clamp(10px, 2.5vw, 14px);
+                min-height: clamp(150px, 22vw, 190px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
             .char-name {
                 font-size: clamp(10px, 2vw, 11px);
             }
