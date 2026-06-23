@@ -1930,32 +1930,32 @@
         /* Character Grid */
         .char-grid {
             display: grid;
-            grid-template-columns: repeat(5, minmax(clamp(130px, 15vw, 170px), 1fr));
+            grid-template-columns: repeat(5, minmax(clamp(150px, 18vw, 220px), 1fr));
             justify-content: center;
             justify-items: center;
-            gap: clamp(16px, 2vw, 24px);
+            gap: clamp(18px, 2.5vw, 28px);
             margin: 0 auto clamp(20px, 3vw, 32px);
-            width: min(100%, 1100px);
+            width: min(100%, 1200px);
         }
 
         .char-card {
             width: 100%;
-            max-width: 170px;
+            max-width: 220px;
             background: linear-gradient(135deg, rgba(126, 200, 227, 0.2) 0%, rgba(255, 182, 217, 0.2) 100%);
             border: clamp(1.5px, 0.5vw, 2px) solid #8B5E3C;
-            padding: clamp(14px, 2vw, 20px);
-            border-radius: 15px;
+            padding: clamp(18px, 2.5vw, 24px);
+            border-radius: 18px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: clamp(12px, 1.5vw, 16px);
+            gap: clamp(16px, 2vw, 20px);
             overflow: hidden;
-            min-height: clamp(190px, 26vw, 250px);
+            min-height: clamp(230px, 28vw, 300px);
         }
 
         .char-card:hover {
@@ -1964,17 +1964,17 @@
         }
 
         .char-svg {
-            width: clamp(70px, 15vw, 96px);
-            height: clamp(88px, 18vw, 112px);
-            margin: 0 auto 10px;
+            width: clamp(90px, 18vw, 120px);
+            height: clamp(110px, 22vw, 140px);
+            margin: 0 auto 12px;
             display: block;
             flex-shrink: 0;
         }
 
         .char-card svg {
-            width: clamp(70px, 15vw, 96px) !important;
-            height: clamp(88px, 18vw, 112px) !important;
-            margin: 0 auto clamp(8px, 2vw, 10px) !important;
+            width: clamp(90px, 18vw, 120px) !important;
+            height: clamp(110px, 22vw, 140px) !important;
+            margin: 0 auto clamp(10px, 2vw, 12px) !important;
             display: block !important;
         }
 
