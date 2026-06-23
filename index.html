@@ -2761,6 +2761,28 @@
                 margin: 0 auto;
             }
 
+            /* Fix player info symmetry on phones */
+            #screen-player-info .content-card {
+                width: min(92vw, 360px);
+                max-width: 360px;
+                padding: clamp(12px, 3vw, 18px);
+                box-sizing: border-box;
+                text-align: center;
+            }
+
+            #screen-player-info input,
+            #screen-player-info .btn-gold {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            #screen-player-info h1 {
+                margin-top: 4px;
+            }
+
             .status-bar {
                 padding: clamp(8px, 2vw, 10px);
                 flex-wrap: wrap;
