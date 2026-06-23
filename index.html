@@ -4405,22 +4405,30 @@
             adventureState.obstacles = adventureState.obstacles.filter(o => !o.done);
         }
 
-        function spawnAdventureObstacle(stage) {
+        function spawnAdventureObstacle(stage, forceCorrect = false) {
             const x = Math.floor(Math.random() * 72) + 14;
             const obstacle = document.createElement('div');
             obstacle.className = 'adventure-obstacle';
-            obstacle.style.top = '-12%';
+            // position left in percent; vertical movement handled by translateY
             obstacle.style.left = `${x}%`;
-            const options = [...new Set([adventureState.correctInstrument.icon, ...adventureState.correctInstrument.options])];
-            const icon = options[Math.floor(Math.random() * options.length)];
-            if (icon === adventureState.correctInstrument.icon && adventureState.correctInstrument.image) {
+            obstacle.style.transform = `translateY(-140px)`;
+            const baseOptions = adventureState.correctInstrument ? (adventureState.correctInstrument.options || []) : [];
+            const options = [...new Set([adventureState.correctInstrument ? adventureState.correctInstrument.icon : '🎵', ...baseOptions])];
+            let icon;
+            if (forceCorrect) {
+                icon = adventureState.correctInstrument ? adventureState.correctInstrument.icon : options[0];
+            } else {
+                icon = options[Math.floor(Math.random() * options.length)];
+            }
+            if (adventureState.correctInstrument && icon === adventureState.correctInstrument.icon && adventureState.correctInstrument.image) {
                 obstacle.innerHTML = `<img src="${adventureState.correctInstrument.image}" alt="${adventureState.correctInstrument.name}" />`;
             } else {
                 obstacle.innerText = icon;
             }
             obstacle.dataset.icon = icon;
             stage.appendChild(obstacle);
-            adventureState.obstacles.push({ el: obstacle, x, y: -12, hit: false, done: false, icon });
+            const initPx = -140;
+            adventureState.obstacles.push({ el: obstacle, x, yPx: initPx, hit: false, done: false, icon });
         }
 
         function completeAdventure() {
