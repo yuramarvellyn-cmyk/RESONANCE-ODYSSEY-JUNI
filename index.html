@@ -3327,6 +3327,7 @@
         };
         
         const TRAVEL_DURATION = 5000; // 5 seconds untuk perjalanan (agar musik bisa dimainkan)
+        const TRAVEL_SETTLE = 700; // ms: jeda singkat saat avatar menetap di wilayah baru sebelum mini-game
         const DEFAULT_PREVIEW_IMAGE = 'https://raw.githubusercontent.com/AYAA-lab/resonance-odyssey/0e31389538a02c42684025cbc04d8fb04add8b76/JAKARTA.png';
 
         let audioContext = null;
@@ -3738,13 +3739,16 @@
             // Putar musik perjalanan ke kota ini
             playTravelMusic(state.idx);
 
-            // Langsung tampilkan overlay tanpa jeda
-            if (!state.visited.has(state.idx)) {
-                state.visited.add(state.idx);
-                showAreaPreview();
-            } else {
-                state.isMoving = false;
-            }
+            // Setelah avatar berpindah, beri jeda singkat agar terlihat menetap,
+            // lalu tampilkan mini-game (area preview)
+            setTimeout(() => {
+                if (!state.visited.has(state.idx)) {
+                    state.visited.add(state.idx);
+                    showAreaPreview();
+                } else {
+                    state.isMoving = false;
+                }
+            }, TRAVEL_SETTLE);
         }
 
         function moveToNextTile() {
@@ -3755,13 +3759,16 @@
             updateControlButtons();
             playTravelMusic(state.idx);
 
-            // Langsung tampilkan overlay tanpa jeda
-            if (!state.visited.has(state.idx)) {
-                state.visited.add(state.idx);
-                showAreaPreview();
-            } else {
-                state.isMoving = false;
-            }
+            // Setelah avatar berpindah, beri jeda singkat agar terlihat menetap,
+            // lalu tampilkan mini-game (area preview)
+            setTimeout(() => {
+                if (!state.visited.has(state.idx)) {
+                    state.visited.add(state.idx);
+                    showAreaPreview();
+                } else {
+                    state.isMoving = false;
+                }
+            }, TRAVEL_SETTLE);
         }
 
         function showQuiz() {
@@ -3974,19 +3981,22 @@
             // Putar musik perjalanan
             playTravelMusic(state.idx);
 
-            // Langsung proses tanpa jeda perjalanan
-            if (!state.visited.has(state.idx)) {
-                state.visited.add(state.idx);
-                state.autoPaused = true;
-                showAreaPreview();
-            } else {
-                state.isMoving = false;
-                if (state.autoMode && !state.autoPaused && state.idx !== lastIdx) {
-                    state.autoTimer = setTimeout(autoStep, 300);
-                } else if (state.idx === lastIdx) {
-                    stopAuto();
+            // Setelah avatar berpindah, beri jeda singkat agar terlihat menetap,
+            // lalu tampilkan mini-game (area preview)
+            setTimeout(() => {
+                if (!state.visited.has(state.idx)) {
+                    state.visited.add(state.idx);
+                    state.autoPaused = true;
+                    showAreaPreview();
+                } else {
+                    state.isMoving = false;
+                    if (state.autoMode && !state.autoPaused && state.idx !== lastIdx) {
+                        state.autoTimer = setTimeout(autoStep, 300);
+                    } else if (state.idx === lastIdx) {
+                        stopAuto();
+                    }
                 }
-            }
+            }, TRAVEL_SETTLE);
         }
 
         function showAreaPreview() {
