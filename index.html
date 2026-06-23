@@ -4183,12 +4183,13 @@
         }
 
         function animateCharacterToRegion() {
-            const token = document.getElementById('player-token');
-            if (token) {
-                // Tambahkan animasi bounce atau glow
-                token.style.animation = 'bounce 1s ease-in-out';
+            // Hanya beri efek animasi pada avatar mini-game (`adventure-player`),
+            // agar avatar di papan tidak ikut bergerak.
+            const advPlayer = document.getElementById('adventure-player');
+            if (advPlayer) {
+                advPlayer.style.animation = 'bounce 1s ease-in-out';
                 setTimeout(() => {
-                    token.style.animation = '';
+                    advPlayer.style.animation = '';
                     document.getElementById('adventure-continue-btn').classList.remove('hidden');
                 }, 1000);
             } else {
