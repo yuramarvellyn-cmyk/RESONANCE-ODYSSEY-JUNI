@@ -3738,14 +3738,13 @@
             // Putar musik perjalanan ke kota ini
             playTravelMusic(state.idx);
 
-            setTimeout(() => {
-                if (!state.visited.has(state.idx)) {
-                    state.visited.add(state.idx);
-                    showAreaPreview();
-                } else {
-                    state.isMoving = false;
-                }
-            }, TRAVEL_DURATION);
+            // Langsung tampilkan overlay tanpa jeda
+            if (!state.visited.has(state.idx)) {
+                state.visited.add(state.idx);
+                showAreaPreview();
+            } else {
+                state.isMoving = false;
+            }
         }
 
         function moveToNextTile() {
@@ -3756,14 +3755,13 @@
             updateControlButtons();
             playTravelMusic(state.idx);
 
-            setTimeout(() => {
-                if (!state.visited.has(state.idx)) {
-                    state.visited.add(state.idx);
-                    showAreaPreview();
-                } else {
-                    state.isMoving = false;
-                }
-            }, TRAVEL_DURATION);
+            // Langsung tampilkan overlay tanpa jeda
+            if (!state.visited.has(state.idx)) {
+                state.visited.add(state.idx);
+                showAreaPreview();
+            } else {
+                state.isMoving = false;
+            }
         }
 
         function showQuiz() {
@@ -3976,20 +3974,19 @@
             // Putar musik perjalanan
             playTravelMusic(state.idx);
 
-            state.autoTimer = setTimeout(() => {
-                if (!state.visited.has(state.idx)) {
-                    state.visited.add(state.idx);
-                    state.autoPaused = true;
-                    showAreaPreview();
-                } else {
-                    state.isMoving = false;
-                    if (state.autoMode && !state.autoPaused && state.idx !== lastIdx) {
-                        state.autoTimer = setTimeout(autoStep, 300);
-                    } else if (state.idx === lastIdx) {
-                        stopAuto();
-                    }
+            // Langsung proses tanpa jeda perjalanan
+            if (!state.visited.has(state.idx)) {
+                state.visited.add(state.idx);
+                state.autoPaused = true;
+                showAreaPreview();
+            } else {
+                state.isMoving = false;
+                if (state.autoMode && !state.autoPaused && state.idx !== lastIdx) {
+                    state.autoTimer = setTimeout(autoStep, 300);
+                } else if (state.idx === lastIdx) {
+                    stopAuto();
                 }
-            }, TRAVEL_DURATION);
+            }
         }
 
         function showAreaPreview() {
