@@ -3512,6 +3512,23 @@
             }
         }
 
+        // Helper: hide/show board token to avoid showing it during overlays
+        function hideBoardToken() {
+            const token = document.getElementById('player-token');
+            if (token) {
+                token.classList.add('hidden');
+                token.style.display = 'none';
+            }
+        }
+
+        function showBoardToken() {
+            const token = document.getElementById('player-token');
+            if (token) {
+                token.classList.remove('hidden');
+                token.style.display = 'flex';
+            }
+        }
+
         function updateStatusPanel() {
             const schoolElement = document.getElementById('display-school-name');
             const visitedElement = document.getElementById('visited-count');
@@ -3764,6 +3781,8 @@
             }
 
             const overlay = document.getElementById('quiz-overlay');
+            // sembunyikan token papan saat menampilkan quiz
+            hideBoardToken();
             document.getElementById('quiz-header').innerText = `TANTANGAN MUSIK: ${cityData[state.idx].name}`;
             document.getElementById('quiz-question').innerText = state.currentQuiz.q;
             
@@ -3828,6 +3847,8 @@
             setTimeout(() => {
                 document.getElementById('quiz-overlay').classList.remove('show');
                 state.isMoving = false;
+                // kembalikan tampilan token papan saat quiz ditutup
+                showBoardToken();
                 if (state.lives <= 0) {
                     finish(false);
                 } else if (state.visited.size === cityData.length) {
@@ -4035,6 +4056,8 @@
             document.getElementById('adventure-start-btn').classList.remove('hidden');
             document.getElementById('adventure-continue-btn').classList.add('hidden');
             document.getElementById('area-preview-overlay').classList.remove('show');
+            // sembunyikan token papan saat menampilkan overlay petualangan
+            hideBoardToken();
             overlay.classList.remove('hidden');
             overlay.classList.add('show');
         }
@@ -4059,6 +4082,8 @@
             player.style.left = '50%';
             player.style.bottom = '12%';
             setPlayerAvatar();
+            // pastikan token papan tersembunyi saat mini-game berjalan
+            hideBoardToken();
 
             const stage = document.getElementById('adventure-stage');
             stage.querySelectorAll('.adventure-obstacle').forEach(el => el.remove());
@@ -4346,6 +4371,8 @@
                 setTimeout(() => {
                     document.getElementById('quiz-cards-overlay').classList.remove('show');
                     state.isMoving = false;
+                    // kembalikan token papan setelah kartu selesai
+                    showBoardToken();
                     if (state.lives <= 0) {
                         finish(false);
                     } else if (state.visited.size === cityData.length) {
